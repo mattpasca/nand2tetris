@@ -50,7 +50,7 @@ char* symbol(){
     char retrieved_symbol[20];
     for(int i=1; i<20; ++i){
         while(buffer[i]!=')'){
-            sscanf(asm_file, "%c", &retrieved_symbol[i-1]);
+            sscanf(buffer, "%c", &retrieved_symbol[i-1]);
         }
     }
     return retrieved_symbol;
@@ -65,7 +65,7 @@ char* dest(){
         if(buffer[i]=='='){
             break;
         }
-        sscanf(asm_file, "%c", &dest_result[i]);
+        sscanf(buffer, "%c", &dest_result[i]);
     }
     return dest_result;
 }
@@ -74,7 +74,7 @@ char* comp(){
     char comp_result[6];
     for(int i=0; i<6; ++i){
         while(buffer[i]!=';'){
-            sscanf(asm_file, "%c", &comp_result[i]);
+            sscanf(buffer, "%c", &comp_result[i]);
         }
         if(buffer[i]==';'){
             reduced_buffer = &buffer[i+1];
@@ -86,7 +86,7 @@ char* comp(){
 char* jump(){
     char* jump_result[3];
     for(int i=0; i<3; +i){
-        sscanf(asm_file, "%c", &jump_result);
+        sscanf(buffer, "%c", &jump_result);
     }
     return jump_result;
 }
