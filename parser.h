@@ -56,7 +56,7 @@ char* symbol(){
 }
 
 char* dest(){
-    char dest[3];
+    char dest_result[3];
     for(int i=0; i<3; ++i){
         if(buffer[i]==';'){
             return NULL;
@@ -64,7 +64,17 @@ char* dest(){
         if(buffer[i]=='='){
             break;
         }
-        sscanf(asm_file, "%c", &dest[i]);
+        sscanf(asm_file, "%c", &dest_result[i]);
     }
-    return dest;
+    return dest_result;
+}
+
+char* comp(){
+    char comp_result[6];
+    for(int i=0; i<6; ++i){
+        while(buffer[i]!=';'){
+            sscanf(asm_file, "%c", &comp_result[i]);
+        }
+    }
+    return comp_result;
 }
