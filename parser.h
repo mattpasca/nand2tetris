@@ -54,3 +54,17 @@ char* symbol(){
     }
     return retrieved_symbol;
 }
+
+char* dest(){
+    char dest[3];
+    for(int i=0; i<3; ++i){
+        if(buffer[i]==';'){
+            return NULL;
+        }
+        if(buffer[i]=='='){
+            break;
+        }
+        sscanf(asm_file, "%c", &dest[i]);
+    }
+    return dest;
+}
