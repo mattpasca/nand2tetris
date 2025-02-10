@@ -46,5 +46,11 @@ char commandType(){
 }
 
 char* symbol(){
-        
+    char retrieved_symbol[20];
+    for(int i=1; i<20; ++i){
+        while(buffer[i]!=')'){
+            sscanf(asm_file, "%c", &retrieved_symbol[i-1]);
+        }
+    }
+    return retrieved_symbol;
 }
