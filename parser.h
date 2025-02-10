@@ -1,0 +1,50 @@
+/* This file contains the parser module for the hack assembler
+ * of the nand2tetris Project.
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+static  FILE* asm_file;
+static int current_line;
+long internal_fileptr;
+int buffer_size = 250;
+static char* buffer[buffer_size];
+
+void initializer(char* filename){
+    asm_file = fopen(filename, "r");
+}
+
+bool hasMoreCommands(){
+    internal_fileptr = fgets(asm_file);
+    if(internal_fileptr>=0){
+         return true;
+    }else{
+        return false;
+    }
+}
+
+void advance(){
+    if(hasMoreCommands()){
+        fgets(buffer, buffer_size, asm_file);
+    }
+}
+
+char commandType(){
+    char a_command = '@';
+    char l_command = '(';
+
+    if(buffer, a_command){
+        return 'A';
+    }
+    if(buffer, l_command){
+        return 'L';
+    }else{
+        return 'C';
+    }
+}
+
+char* symbol(){
+        
+}
