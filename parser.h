@@ -11,6 +11,7 @@ static int current_line;
 long internal_fileptr;
 int buffer_size = 250;
 static char* buffer[buffer_size];
+static char* reduced_buffer[3];
 
 void initializer(char* filename){
     asm_file = fopen(filename, "r");
@@ -75,6 +76,17 @@ char* comp(){
         while(buffer[i]!=';'){
             sscanf(asm_file, "%c", &comp_result[i]);
         }
+        if(buffer[i]==';'){
+            reduced_buffer = &buffer[i+1];
+        }
     }
     return comp_result;
+}
+
+char* jump(){
+    char* jump_result[3];
+    for(int i=0; i<3; +i){
+        sscanf(asm_file, "%c", &jump_result);
+    }
+    return jump_result;
 }
