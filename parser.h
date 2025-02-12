@@ -6,12 +6,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-static  FILE* asm_file;
-static int current_line;
-long internal_fileptr;
-int buffer_size = 250;
-static char* buffer[buffer_size];
-static char* reduced_buffer[3];
+extern FILE* asm_file;
+extern int current_line;
+extern long internal_fileptr;
+extern int buffer_size = 250;
+extern char* buffer[buffer_size];
+extern char* reduced_buffer[3];
 
 void initializer(char* filename){
     asm_file = fopen(filename, "r");
