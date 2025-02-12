@@ -13,10 +13,12 @@ int main(int argc, char* argv[]){
     char* reduced_buffer[3];
     FILE* hack_file;
 //-- Initialize files and variables --//
-    // open the file with the assembly code
-    argv++;
-    strcat(argv, ".txt");
-    asm_file = fopen(argv,"r");
+    if(argc>0){
+        argv++;
+    }else{
+        printf("Please provide Assembly Code!");
+        exit();
+    }
 
     // open the file for the generated binary code
 
