@@ -25,6 +25,8 @@ int main(int argc, char* argv[]){
         exit();
     }
 
+    more_commands = true;
+
     // open the file for the generated binary code
 
 //---------- Parse ---------------//
