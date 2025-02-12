@@ -32,4 +32,5 @@ int main(int argc, char* argv[]){
 //---------- Translate ----------//
 
     fclose(asm_file);
+    fclose(hack_file);
 }
