@@ -6,7 +6,12 @@
 
 int main(int argc, char* argv[]){
     FILE* asm_file;
-    int current_line; // unnecessary?
+    bool more_commands;
+    char type;
+    char* dest_mnemonic[3];
+    char* comp_mnemonic[10];
+    char* jump_mnemonic[3];
+    char* current_symbol[20];
     long internal_fileptr;
     int buffer_size = 250;
     char* buffer[buffer_size];
