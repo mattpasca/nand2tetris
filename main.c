@@ -30,6 +30,19 @@ int main(int argc, char* argv[]){
     // open the file for the generated binary code
 
 //---------- Parse ---------------//
+    while(more_commands==true){
+        initializer(argv);
+        type = commandType();
+        if(type=='C'){
+            dest_mnemonic = dest();
+            comp_mnemonic = comp();
+            jump_mnemonic = jump();
+        }else{
+            current_symbol = symbol();
+        }
+        more_commands = hasMoreCommands();
+    }
+
 
 //---------- Translate ----------//
 
