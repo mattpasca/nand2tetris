@@ -5,20 +5,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 extern FILE* asm_file;
-extern int current_line;
 extern long internal_fileptr;
-extern int buffer_size = 250;
-extern char* buffer[buffer_size];
-extern char* reduced_buffer[3];
+extern int buffer_size;
+extern char buffer[buffer_size];
+extern char reduced_buffer[3];
+extern char dest_mnemonic[3];
+extern char comp_mnemonic[10];
+extern char jump_mnemonic[3];
+extern char current_symbol[20];
+int string_length;
 
 void initializer(char* filename){
     asm_file = fopen(filename, "r");
 }
 
 bool hasMoreCommands(){
-    internal_fileptr = fgets(asm_file);
+    internal_fileptr = ftell(asm_file);
     if(internal_fileptr>=0){
          return true;
     }else{
@@ -36,57 +41,47 @@ char commandType(){
     char a_command = '@';
     char l_command = '(';
 
-    if(buffer, a_command){
+    if(buffer[0]==a_command){
         return 'A';
     }
-    if(buffer, l_command){
+    if(buffer[0]==l_command){
         return 'L';
     }else{
         return 'C';
     }
 }
 
-char* symbol(){
-    char retrieved_symbol[20];
-    for(int i=1; i<20; ++i){
-        while(buffer[i]!=')'){
-            sscanf(buffer, "%c", &retrieved_symbol[i-1]);
-        }
+void symbol(){
+    sscanf(buffer+1, "%s", current_symbol);
+    if(buffer[0]=='('){
+        string_length = strlen(current_symbol);
+        current_symbol[string_length-1] = '\0';
     }
-    return retrieved_symbol;
 }
 
-char* dest(){
-    char dest_result[3];
-    for(int i=0; i<3; ++i){
-        if(buffer[i]==';'){
-            return NULL;
-        }
-        if(buffer[i]=='='){
-            break;
-        }
-        sscanf(buffer, "%c", &dest_result[i]);
+void dest(){
+    equal = '=';
+    int equal_position = strcspn(buffer, &equal);
+    string_length = strlen(buffer) - equal_position;
+    if(string_length==0){
+        memset(dest_mnemonic, 0, sizeof(dest_mnemonic));
+    }else{
+        char expression[10];
+        snprintf(expression, sizeof(expression), "%%%ds", equal_position+1);
+        sscanf(buffer, expression, dest_mnemonic);
     }
-    return dest_result;
 }
 
-char* comp(){
-    char comp_result[6];
-    for(int i=0; i<6; ++i){
-        while(buffer[i]!=';'){
-            sscanf(buffer, "%c", &comp_result[i]);
-        }
-        if(buffer[i]==';'){
-            reduced_buffer = &buffer[i+1];
-        }
+void comp(){
+    equal = '=';
+    string_length = strlen(buffer) - strcspn(buffer, &equal);
+    if(string_length>0){
+        sscanf(buffer+string_length, comp_mnemonic);
     }
-    return comp_result;
 }
 
-char* jump(){
-    char* jump_result[3];
+void jump(){
     for(int i=0; i<3; +i){
-        sscanf(buffer, "%c", &jump_result);
+        sscanf(buffer, "%c", jump_mnemonic[i]);
     }
-    return jump_result;
 }
