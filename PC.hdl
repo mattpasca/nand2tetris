@@ -1,0 +1,13 @@
+CHIP PC{
+    IN in[16], inc, load, reset;
+    OUT out[16];
+    PARTS:
+    Register(in=in, load=load, out=basechange);
+    Or(a=reset, b=inc, out=resetorinc);
+    Mux16(a[0]=true, a[1..15]=false, b=basechange, sel=load, out=base);
+    Add16(a=previousout, b=base, out=incremented);
+    Not(in=reset, out=notreset);
+    And(a=inc, b=notreset, out=increset);
+    Mux16(a=false, b=incremented, sel=increset, out=newvalue);
+    Register(in=newvalue, load=resetorinc, out=previousout, out=out);
+}

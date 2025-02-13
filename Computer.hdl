@@ -1,0 +1,10 @@
+CHIP Computer{
+    IN reset;
+    PARTS:
+    CPU(inM=MemoryOut, instruction=RomInstruction, reset=reset, outM=RamIn, writeM=RamLoad, adressM=CPUAdress, pc=RomAdress);
+    ROM32K(adress=RomAdress, out=RomInstruction);
+    RAM16K(in=RamIn, load=RamLoad, adress=CPUAdress, out=RamOut);
+    Mux16(a=RamOut, b=ScreenOut, sel=CPUAdress[14], out=MemoryOut);
+    Screen();
+    Keyboard();
+}

@@ -1,0 +1,8 @@
+CHIP Trivial{
+     IN in;
+     OUT out;
+     PARTS:
+     Not(in=in, out=w0);
+     Not(in=w0, out=out);
+}
+
