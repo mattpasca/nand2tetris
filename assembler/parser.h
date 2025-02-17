@@ -1,5 +1,7 @@
 /* This file contains the parser module for the hack assembler
  * of the nand2tetris Project.
+ *
+ * ISSUES empty spaces in buffer are not handled.
  */
 
 #include <stdio.h>
