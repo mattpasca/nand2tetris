@@ -51,6 +51,7 @@ char commandType(){
             case '@': result = 'A'; break;
             default : result = 'C'; break;
         }
+    }
     if(buffer[0]=='('){
         result = 'L';
     }
