@@ -41,24 +41,20 @@ void advance(){
 }
 
 char commandType(){
-    char a_command = '@';
-    char l_command = '(';
-
+    char result;
+    result = '\0';
     char white_space = ' ';
     last_occurence = strrchr(buffer, white_space);
-    if(strlen(buffer)>1){
+    if(last_occurence){
         last_occurence++;
-    } else{
-        return 'N';
+        switch(*last_occurence){
+            case '@': result = 'A'; break;
+            default : result = 'C'; break;
+        }
+    if(buffer[0]=='('){
+        result = 'L';
     }
-    if(*last_occurence==a_command){
-        return 'A';
-    }
-    if(*last_occurence==l_command){
-        return 'L';
-    }else{
-        return 'C';
-    }
+    return result;
 }
 
 void symbol(){
