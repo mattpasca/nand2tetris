@@ -1,44 +1,47 @@
+// TODO buffer has to be without whitespace
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include "parser.h"
 
-int main(int argc, char* argv[]){
-    FILE* asm_file;
-    bool more_commands;
-    char type;
-    char* dest_mnemonic[3];
-    char* comp_mnemonic[10];
-    char* jump_mnemonic[3];
-    char* current_symbol[20];
-    long internal_fileptr;
-    int buffer_size = 250;
-    char* buffer[buffer_size];
-    char* reduced_buffer[3];
-    FILE* hack_file;
-//-- Initialize files and variables --//
-    if(argc>0){
-        argv++;
-    }else{
-        printf("Please provide Assembly Code!");
-        exit();
-    }
+FILE* asm_file;
+bool more_commands;
+char type;
+char dest_mnemonic[3];
+char comp_mnemonic[10];
+char jump_mnemonic[3];
+char current_symbol[20];
+char buffer[250];
+FILE* hack_file;
 
+int main(int argc, char* argv[]){
+
+//-- Initialize files and variables --//
+    if(argc==0){
+         printf("Please provide Assembly Code!");
+         exit(EXIT_FAILURE);
+    }
     more_commands = true;
 
     // open the file for the generated binary code
+    initializer(argv[1]);
 
 //---------- Parse ---------------//
     while(more_commands==true){
-        initializer(argv);
+        advance();
         type = commandType();
+        if(type == '\0'){
+            more_commands = hasMoreCommands();
+            continue;
+        }
         if(type=='C'){
-            dest_mnemonic = dest();
-            comp_mnemonic = comp();
-            jump_mnemonic = jump();
+            dest();
+            comp();
+            jump();
         }else{
-            current_symbol = symbol();
+            symbol();
         }
         more_commands = hasMoreCommands();
     }
@@ -47,5 +50,5 @@ int main(int argc, char* argv[]){
 //---------- Translate ----------//
 
     fclose(asm_file);
-    fclose(hack_file);
+ // fclose(hack_file);
 }
